@@ -1,16 +1,18 @@
 version: '3'
 
 services:
-  front:
+  frontend:
     build:
       context: .
-      dockerfile: ./front/Dockerfile
+      dockerfile: ./frontend/Dockerfile
     command: [npm, start]
     ports:
-      - 8080:3000
+      # 同じportを使用しないとローカルではエラーが発生した
+      # react-scripts内のwebpack-dev-serverでエラー
+      - 3000:3000
     tty: true
     stdin_open: true
     volumes:
       - type: bind
-        source: ./front/rubberducker
+        source: ./frontend/rubberducker
         target: /app

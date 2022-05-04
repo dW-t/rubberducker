@@ -4,5 +4,5 @@ ENV LANG=C.UTF-8
 ENV APP=/app
 WORKDIR ${APP}
 
-COPY ./front/rubberducker ${APP}
+COPY ./frontend/rubberducker ${APP}
 RUN npm install

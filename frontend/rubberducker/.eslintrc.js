@@ -21,21 +21,23 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-    'unused-imports'
-  ],
+  plugins: ['react', '@typescript-eslint', 'unused-imports'],
   ignorePatterns: ['build'],
   rules: {
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ["error"],
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-use-before-define': ['error'],
     'import/prefer-default-export': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'error',
     'unused-imports/no-unused-vars': [
       'warn',
-      { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+      },
     ],
     'react/function-component-definition': [
       2,

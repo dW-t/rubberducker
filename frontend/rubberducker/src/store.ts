@@ -1,11 +1,15 @@
-import {configureStore} from "@reduxjs/toolkit";
-import {useSelector as rawUseSelector, useDispatch as rawUseDispatch, TypedUseSelectorHook} from "react-redux";
-// import {authSlice} from "./slices/auth";
+import { configureStore } from '@reduxjs/toolkit';
+import {
+  useSelector as rawUseSelector,
+  useDispatch as rawUseDispatch,
+  TypedUseSelectorHook,
+} from 'react-redux';
+import counterReducer from './slices/cuonter';
 
 export const store = configureStore({
   reducer: {
     // sliceの登録を行う
-    // auth: authSlice.reducer,
+    counter: counterReducer,
   },
 });
 

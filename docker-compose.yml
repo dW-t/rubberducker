@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: ./frontend/Dockerfile
     command: [npm, start]
+    depends_on:
+      - backend
     ports:
       # 同じportを使用しないとローカルではエラーが発生した
       # react-scripts内のwebpack-dev-serverでエラー
@@ -15,4 +17,18 @@ services:
     volumes:
       - type: bind
         source: ./frontend/rubberducker
-        target: /app
+        target: /app/frontend
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    command: [npm, start]
+    ports:
+      - 5000:5000
+    tty: true
+    stdin_open: true
+    volumes:
+      - type: bind
+        source: ./backend/rubberducker
+        target: /app/backend

@@ -2,23 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  userName: string;
+  UserName: string | undefined;
+  MainProfile: string | undefined;
+  SubProfile: string | undefined;
 };
 
-const UserName = styled.p`
+const Name = styled.p`
   font-weight: bold;
   font-size: 24px;
   margin-top: 50px;
   margin-left: 20px;
 `;
 
-const UserData: React.FC<Props> = ({ userName }: Props) => (
+const UserData: React.FC<Props> = ({
+  UserName,
+  MainProfile,
+  SubProfile,
+}: Props) => (
   <>
-    <UserName>{userName}</UserName>
+    <Name>{UserName}</Name>
     <div>
       <span>
-        <p>ユーザープロフィール</p>
-        <p>付加情報</p>
+        <p>{MainProfile}</p>
+        <p>{SubProfile}</p>
       </span>
     </div>
   </>

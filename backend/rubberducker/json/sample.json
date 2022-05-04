@@ -1,0 +1,42 @@
+{
+  "UserName": "だいき",
+  "Profile": {
+    "MainProfile": "だいきのプロフィールです",
+    "SubProfile": "サブプロフィール"
+  },
+  "BackGroundImage": null,
+  "UserIcon": null,
+  "Contents": [
+    {
+      "Id": 1,
+      "MainContent": {
+        "Date": "2022/05/04",
+        "Body": "２回目のとうこう",
+        "LikeCount": 0
+      },
+      "ReplyCount": 2,
+      "Reply": [
+        {
+          "UserName": "だれか",
+          "UserIcon": "",
+          "Body": "りぷらい１"
+        },
+        {
+          "UserName": "だれか2",
+          "UserIcon": "",
+          "Body": "りぷらい２"
+        }
+      ]
+    },
+    {
+      "Id": 2,
+      "MainContent": {
+        "Date": "2022/05/03",
+        "Body": "はつとうこう",
+        "LikeCount": 0
+      },
+      "ReplyCount": 0,
+      "Reply": null
+    }
+  ]
+}

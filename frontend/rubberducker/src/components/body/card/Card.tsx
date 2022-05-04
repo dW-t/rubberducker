@@ -1,4 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
+import ReplyIcon from '../../../img/reply.svg';
+import LikeIcon from '../../../img/like.svg';
 
 type Props = {
   UserName: string;
@@ -10,12 +13,78 @@ type Props = {
   };
 };
 
+const Wrapper = styled.div`
+  display: flex;
+  margin: 10px 0 0 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid;
+`;
+
+const Iconimg = styled.div<{ image: string | null }>((props) => ({
+  backgroundImage: `url(data:png;base64,${props.image ?? ''})`,
+  width: '56px',
+  height: '56px',
+  backgroundColor: 'white',
+  borderRadius: '50%',
+  marginRight: '10px',
+  marginLeft: '4px',
+}));
+
+const Content = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: 10% 90%;
+  grid-template-rows: 20% 70% 10%;
+`;
+
+const Main = styled.p`
+  grid-column: 1/3;
+  font-size: 14px;
+  margin: 0;
+  margin-top: 20px;
+`;
+
+const Name = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  margin-top: 10px;
+  margin-right: 10px;
+`;
+
+const Date = styled.p`
+  font-size: 14px;
+  margin: 0;
+  margin-top: 10px;
+  margin-right: 10px;
+`;
+
+const SubItems = styled.div`
+  grid-column: 1/3;
+  display: flex;
+  margin-right: 6px;
+`;
+
+const Item = styled.div<{ icon: string }>`
+  height: 16px;
+  width: 16px;
+  background-image: url(${(props) => props.icon});
+  margin-right: 5%;
+`;
+
 const Card: React.FC<Props> = ({ MainContent, UserName, UserIcon }) => (
-  <div>
-    <p>{UserName}</p>
-    <p>{MainContent.Date}</p>
-    <p>{MainContent.Body}</p>
-  </div>
+  <Wrapper>
+    <Iconimg image={UserIcon} />
+    <Content>
+      <Name>{UserName}</Name>
+      <Date>{MainContent.Date}</Date>
+      <Main>{MainContent.Body}</Main>
+      <SubItems>
+        <Item icon={ReplyIcon} />
+        <Item icon={LikeIcon} />
+      </SubItems>
+    </Content>
+  </Wrapper>
 );
 
 export default Card;

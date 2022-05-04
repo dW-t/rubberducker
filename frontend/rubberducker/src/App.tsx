@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Main from './components/body/Main';
 import RightBar from './components/body/rightbar/RightBar';
-import LeftBar from './components/leftbar/LeftBar';
+import LeftBar from './components/body/leftbar/LeftBar';
 
 const Wrapper = styled.div`
   display: flex;

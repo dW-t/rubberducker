@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import axios, { AxiosResponse } from 'axios';
 import styled from 'styled-components';
 import UserData from './UserData';
-import contents from '../../json/sample.json';
 import Card from './card/Card';
 
 const Wrapper = styled.div`
@@ -14,23 +15,23 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const Bgimg = styled.div<{ image: string }>`
-  background-image: url(${(props) => props.image});
-  width: 100%;
-  height: 275px;
-  border-radius: 2%;
-`;
+const Bgimg = styled.div<{ image: string | null }>((props) => ({
+  backgroundImage: `url(data:jpg;base64,${props.image ?? ''})`,
+  width: '100%',
+  height: '275px',
+  borderRadius: '2%',
+}));
 
-const Iconimg = styled.div<{ image: string }>`
-  position: absolute;
-  left: 25px;
-  top: 200px;
-  width: 120px;
-  height: 120px;
-  background-color: white;
-  background-image: url(${(props) => props.image});
-  border-radius: 50%;
-`;
+const Iconimg = styled.div<{ image: string | null }>((props) => ({
+  backgroundImage: `url(data:png;base64,${props.image ?? ''})`,
+  position: 'absolute',
+  left: '25px',
+  top: '200px',
+  width: '120px',
+  height: '120px',
+  backgroundColor: 'white',
+  borderRadius: '50%',
+}));
 
 const Button = styled.button`
   position: absolute;
@@ -70,25 +71,73 @@ const Menu = styled.div`
   }
 `;
 
-const Main = () => (
-  <Wrapper>
-    <Bgimg image={contents.BackGroundImage} />
-    <Iconimg image={contents.UserIcon} />
-    <Button>follow</Button>
-    <UserData userName={contents.UserName} />
-    <MenuBox>
-      <Menu>Activity</Menu>
-      <Menu>Like</Menu>
-      <Menu>Reply</Menu>
-    </MenuBox>
-    {contents.Contents.map((content) => (
-      <Card
-        MainContent={content.MainContent}
-        UserName={contents.UserName}
-        UserIcon={contents.UserIcon}
+type Data = {
+  UserName: string;
+  Profile: {
+    MainProfile: string;
+    SubProfile: string;
+  };
+  BackGroundImage: string;
+  UserIcon: string;
+  Contents: [
+    {
+      Id: number;
+      MainContent: {
+        Date: string;
+        Body: string;
+        LikeCount: number;
+      };
+      ReplyCount: string;
+      Reply: [
+        {
+          UserName: string;
+          UserIcon: string;
+          Body: string;
+        }
+      ];
+    }
+  ];
+};
+
+const Main = () => {
+  const [contents, setContent] = useState<Data>();
+
+  useEffect(() => {
+    const getData = async () => {
+      const res: AxiosResponse<Data> = await axios.get(
+        `http://localhost:5000/contents`
+      );
+      setContent(res.data);
+    };
+
+    getData().catch((err) => console.log(err));
+  }, []);
+
+  return (
+    <Wrapper>
+      <Bgimg image={contents !== undefined ? contents.BackGroundImage : null} />
+      <Iconimg image={contents !== undefined ? contents.UserIcon : null} />
+      <Button>follow</Button>
+      <UserData
+        UserName={contents?.UserName}
+        MainProfile={contents?.Profile.MainProfile}
+        SubProfile={contents?.Profile.SubProfile}
       />
-    ))}
-  </Wrapper>
-);
+      <MenuBox>
+        <Menu>Activity</Menu>
+        <Menu>Like</Menu>
+        <Menu>Reply</Menu>
+      </MenuBox>
+      {contents?.Contents.map((content) => (
+        <Card
+          MainContent={content.MainContent}
+          UserName={contents.UserName}
+          UserIcon={contents.UserIcon}
+          key={content.Id}
+        />
+      ))}
+    </Wrapper>
+  );
+};
 
 export default Main;

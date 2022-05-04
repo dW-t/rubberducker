@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   front:
@@ -7,9 +7,10 @@ services:
       dockerfile: ./front/Dockerfile
     command: [npm, start]
     ports:
-      - '8080:3000'
+      - 8080:3000
     tty: true
     stdin_open: true
     volumes:
-      - ./front/rubberducker:/app
-      - /app/node_modules
+      - type: bind
+        source: ./front/rubberducker
+        target: /app

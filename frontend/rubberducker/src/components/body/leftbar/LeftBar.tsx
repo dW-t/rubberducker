@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import SettingsIcon from '../../../img/settings.svg';
 import HomeIcon from '../../../img/home.svg';
@@ -55,11 +56,23 @@ const MenuWithIcon: React.FC<{ title: string; Icon: string }> = ({
   </MenuWrapper>
 );
 
+const ThreadLink = styled(Link)`
+  text-decoration: none;
+  :visited {
+    color: #f1f2ee;
+    text-decoration: none;
+  }
+`;
+
 const LeftBar = () => (
   <Wrapper>
     <MenuBox>
-      <MenuWithIcon title="Home" Icon={HomeIcon} />
-      <MenuWithIcon title="Settings" Icon={SettingsIcon} />
+      <ThreadLink to="/">
+        <MenuWithIcon title="Home" Icon={HomeIcon} />
+      </ThreadLink>
+      <ThreadLink to="/settings">
+        <MenuWithIcon title="Settings" Icon={SettingsIcon} />
+      </ThreadLink>
     </MenuBox>
   </Wrapper>
 );

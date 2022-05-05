@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import axios, { AxiosResponse } from 'axios';
 import styled from 'styled-components';
 import UserData from './UserData';
@@ -102,15 +101,16 @@ type Data = {
 const Main = () => {
   const [contents, setContent] = useState<Data>();
 
+  // 読み込み時
   useEffect(() => {
-    const getData = async () => {
+    const fetchData = async () => {
       const res: AxiosResponse<Data> = await axios.get(
         `http://localhost:5000/contents`
       );
       setContent(res.data);
     };
 
-    getData().catch((err) => console.log(err));
+    fetchData().catch((err) => console.log(err));
   }, []);
 
   return (

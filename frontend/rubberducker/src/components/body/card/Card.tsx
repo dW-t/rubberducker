@@ -31,17 +31,20 @@ const Iconimg = styled.div<{ image: string | null }>((props) => ({
 }));
 
 const Content = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  grid-template-columns: 10% 90%;
-  grid-template-rows: 20% 70% 10%;
+`;
+
+const HeadContent = styled.div`
+  display: flex;
+  width: 100%;
 `;
 
 const Main = styled.p`
-  grid-column: 1/3;
   font-size: 14px;
   margin: 0;
-  margin-top: 20px;
+  margin-top: 4px;
 `;
 
 const Name = styled.p`
@@ -60,9 +63,9 @@ const Date = styled.p`
 `;
 
 const SubItems = styled.div`
-  grid-column: 1/3;
   display: flex;
   margin-right: 6px;
+  margin-top: 10px;
 `;
 
 const Item = styled.div<{ icon: string }>`
@@ -76,8 +79,10 @@ const Card: React.FC<Props> = ({ MainContent, UserName, UserIcon }) => (
   <Wrapper>
     <Iconimg image={UserIcon} />
     <Content>
-      <Name>{UserName}</Name>
-      <Date>{MainContent.Date}</Date>
+      <HeadContent>
+        <Name>{UserName}</Name>
+        <Date>{MainContent.Date}</Date>
+      </HeadContent>
       <Main>{MainContent.Body}</Main>
       <SubItems>
         <Item icon={ReplyIcon} />

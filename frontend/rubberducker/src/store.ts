@@ -4,12 +4,12 @@ import {
   useDispatch as rawUseDispatch,
   TypedUseSelectorHook,
 } from 'react-redux';
-import counterReducer from './slices/cuonter';
+import tweetReducer from './slices/tweet';
 
 export const store = configureStore({
   reducer: {
     // sliceの登録を行う
-    counter: counterReducer,
+    tweetContents: tweetReducer,
   },
 });
 

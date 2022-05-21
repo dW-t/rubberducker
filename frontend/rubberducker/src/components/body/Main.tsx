@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
 import styled from 'styled-components';
 import UserData from './UserData';
 import Card from './card/Card';
 import PlusIcon from '../../img/plus2.svg';
 import TweetModal from './tweetmodal/TweetModal';
+import { useDispatch, useSelector } from '../../store';
+import { getTweets } from '../../slices/tweet';
 
 const Wrapper = styled.div`
   background-color: #435058;
@@ -50,7 +51,7 @@ const Button = styled.button`
   font-size: 1rem;
   transition: all 0.3s;
   :hover {
-    opacity: 0.9;
+    opacity: 0.5;
     cursor: pointer;
   }
 `;
@@ -67,8 +68,9 @@ const AdditionalButton = styled.button<{ icon: string }>`
   border-radius: 50%;
   border-style: none;
   transition: all 0.3s;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.6));
   :hover {
-    opacity: 0.9;
+    opacity: 0.5;
     cursor: pointer;
   }
 `;
@@ -122,20 +124,15 @@ type Data = {
 };
 
 const Main: React.FC = () => {
-  const [contents, setContent] = useState<Data>();
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const tweet = useSelector((state) => state.tweetContents.content);
+  const dispatch = useDispatch();
 
   // 読み込み時
   useEffect(() => {
-    const fetchData = async () => {
-      const res: AxiosResponse<Data> = await axios.get(
-        `http://localhost:5000/contents`
-      );
-      setContent(res.data);
-    };
-
-    fetchData().catch((err) => console.log(err));
-  }, []);
+    dispatch(getTweets()).catch((err) => console.error(err));
+  });
 
   const onClickAddtionalButton = () => {
     setIsOpenModal(!isOpenModal);
@@ -143,25 +140,25 @@ const Main: React.FC = () => {
 
   return (
     <Wrapper>
-      <Bgimg image={contents !== undefined ? contents.BackGroundImage : null} />
-      <Iconimg image={contents !== undefined ? contents.UserIcon : null} />
+      <Bgimg image={tweet !== undefined ? tweet.BackGroundImage : null} />
+      <Iconimg image={tweet !== undefined ? tweet.UserIcon : null} />
       <Button>follow</Button>
       <AdditionalButton icon={PlusIcon} onClick={onClickAddtionalButton} />
       <UserData
-        UserName={contents?.UserName}
-        MainProfile={contents?.Profile.MainProfile}
-        SubProfile={contents?.Profile.SubProfile}
+        UserName={tweet?.UserName}
+        MainProfile={tweet?.Profile.MainProfile}
+        SubProfile={tweet?.Profile.SubProfile}
       />
       <MenuBox>
         <Menu>Activity</Menu>
         <Menu>Like</Menu>
         <Menu>Reply</Menu>
       </MenuBox>
-      {contents?.Contents.map((content) => (
+      {tweet?.Contents.map((content) => (
         <Card
           MainContent={content.MainContent}
-          UserName={contents.UserName}
-          UserIcon={contents.UserIcon}
+          UserName={tweet.UserName}
+          UserIcon={tweet.UserIcon}
           key={content.Id}
         />
       ))}

@@ -21,6 +21,7 @@ const Content = styled.div`
 `;
 
 const Button = styled.button`
+  margin-left: 5px;
   width: 90px;
   height: 35px;
   border-radius: 100vh;
@@ -29,9 +30,15 @@ const Button = styled.button`
   font-size: 1rem;
   transition: all 0.3s;
   :hover {
-    opacity: 0.9;
+    opacity: 0.5;
     cursor: pointer;
   }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 `;
 
 const TextArea = styled.textarea`
@@ -60,8 +67,10 @@ const TweetModal: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             required
             autoFocus
           />
-          <Button onClick={closeModal}>cancel</Button>
-          <Button onClick={closeModal}>send</Button>
+          <ButtonWrapper>
+            <Button onClick={closeModal}>cancel</Button>
+            <Button onClick={closeModal}>send</Button>
+          </ButtonWrapper>
         </Content>
       </Overlay>
     );

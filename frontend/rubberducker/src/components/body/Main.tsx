@@ -3,6 +3,8 @@ import axios, { AxiosResponse } from 'axios';
 import styled from 'styled-components';
 import UserData from './UserData';
 import Card from './card/Card';
+import PlusIcon from '../../img/plus2.svg';
+import TweetModal from './tweetmodal/TweetModal';
 
 const Wrapper = styled.div`
   background-color: #435058;
@@ -12,6 +14,8 @@ const Wrapper = styled.div`
   margin-right: 20px;
   margin-left: 20px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Bgimg = styled.div<{ image: string | null }>((props) => ({
@@ -34,6 +38,7 @@ const Iconimg = styled.div<{ image: string | null }>((props) => ({
 
 const Button = styled.button`
   position: absolute;
+  top: 285px;
   right: 1%;
   margin: 20px 0;
   width: 90px;
@@ -43,6 +48,24 @@ const Button = styled.button`
   border-style: none;
   font-weight: bold;
   font-size: 1rem;
+  transition: all 0.3s;
+  :hover {
+    opacity: 0.9;
+    cursor: pointer;
+  }
+`;
+
+const AdditionalButton = styled.button<{ icon: string }>`
+  position: absolute;
+  top: 40%;
+  right: 1%;
+  margin: 20px 0;
+  width: 42px;
+  height: 42px;
+  background-image: url(${(props) => props.icon});
+  background-color: white;
+  border-radius: 50%;
+  border-style: none;
   transition: all 0.3s;
   :hover {
     opacity: 0.9;
@@ -98,8 +121,9 @@ type Data = {
   ];
 };
 
-const Main = () => {
+const Main: React.FC = () => {
   const [contents, setContent] = useState<Data>();
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   // 読み込み時
   useEffect(() => {
@@ -113,11 +137,16 @@ const Main = () => {
     fetchData().catch((err) => console.log(err));
   }, []);
 
+  const onClickAddtionalButton = () => {
+    setIsOpenModal(!isOpenModal);
+  };
+
   return (
     <Wrapper>
       <Bgimg image={contents !== undefined ? contents.BackGroundImage : null} />
       <Iconimg image={contents !== undefined ? contents.UserIcon : null} />
       <Button>follow</Button>
+      <AdditionalButton icon={PlusIcon} onClick={onClickAddtionalButton} />
       <UserData
         UserName={contents?.UserName}
         MainProfile={contents?.Profile.MainProfile}
@@ -136,6 +165,7 @@ const Main = () => {
           key={content.Id}
         />
       ))}
+      <TweetModal isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
     </Wrapper>
   );
 };

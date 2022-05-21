@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { addTweet } from '../../../slices/tweet';
+import { useDispatch } from '../../../store';
 
 const Overlay = styled.div`
   position: fixed;
@@ -54,6 +56,15 @@ type Props = {
 };
 
 const TweetModal: React.FC<Props> = ({ isOpen, setIsOpen }) => {
+  const textRef = useRef<HTMLTextAreaElement>(null);
+  const dispatch = useDispatch();
+
+  const tweet = () => {
+    const text = textRef.current?.value ?? '';
+    dispatch(addTweet(text));
+    setIsOpen(false);
+  };
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -63,13 +74,14 @@ const TweetModal: React.FC<Props> = ({ isOpen, setIsOpen }) => {
       <Overlay>
         <Content>
           <TextArea
+            ref={textRef}
             placeholder="いま考えていることを書いてみよう！"
             required
             autoFocus
           />
           <ButtonWrapper>
             <Button onClick={closeModal}>cancel</Button>
-            <Button onClick={closeModal}>send</Button>
+            <Button onClick={() => tweet()}>send</Button>
           </ButtonWrapper>
         </Content>
       </Overlay>

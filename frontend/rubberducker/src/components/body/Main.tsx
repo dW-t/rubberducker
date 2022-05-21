@@ -95,34 +95,6 @@ const Menu = styled.div`
   }
 `;
 
-type Data = {
-  UserName: string;
-  Profile: {
-    MainProfile: string;
-    SubProfile: string;
-  };
-  BackGroundImage: string;
-  UserIcon: string;
-  Contents: [
-    {
-      Id: number;
-      MainContent: {
-        Date: string;
-        Body: string;
-        LikeCount: number;
-      };
-      ReplyCount: string;
-      Reply: [
-        {
-          UserName: string;
-          UserIcon: string;
-          Body: string;
-        }
-      ];
-    }
-  ];
-};
-
 const Main: React.FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -132,7 +104,7 @@ const Main: React.FC = () => {
   // 読み込み時
   useEffect(() => {
     dispatch(getTweets()).catch((err) => console.error(err));
-  });
+  }, [dispatch]);
 
   const onClickAddtionalButton = () => {
     setIsOpenModal(!isOpenModal);
@@ -140,8 +112,8 @@ const Main: React.FC = () => {
 
   return (
     <Wrapper>
-      <Bgimg image={tweet !== undefined ? tweet.BackGroundImage : null} />
-      <Iconimg image={tweet !== undefined ? tweet.UserIcon : null} />
+      <Bgimg image={tweet !== null ? tweet.BackGroundImage : null} />
+      <Iconimg image={tweet !== null ? tweet.UserIcon : null} />
       <Button>follow</Button>
       <AdditionalButton icon={PlusIcon} onClick={onClickAddtionalButton} />
       <UserData

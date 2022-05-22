@@ -19,14 +19,14 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const Bgimg = styled.div<{ image: string | null }>((props) => ({
+const Bgimg = styled.div<{ image: string | undefined }>((props) => ({
   backgroundImage: `url(data:jpg;base64,${props.image ?? ''})`,
   width: '100%',
   height: '275px',
   borderRadius: '2%',
 }));
 
-const Iconimg = styled.div<{ image: string | null }>((props) => ({
+const Iconimg = styled.div<{ image: string | undefined }>((props) => ({
   backgroundImage: `url(data:png;base64,${props.image ?? ''})`,
   position: 'absolute',
   left: '25px',
@@ -57,20 +57,21 @@ const Button = styled.button`
 `;
 
 const AdditionalButton = styled.button<{ icon: string }>`
-  position: absolute;
-  top: 40%;
-  right: 1%;
+  position: fixed;
+  top: 90%;
+  right: 30%;
   margin: 20px 0;
-  width: 42px;
-  height: 42px;
+  width: 56px;
+  height: 56px;
   background-image: url(${(props) => props.icon});
   background-color: white;
   border-radius: 50%;
   border-style: none;
   transition: all 0.3s;
+  opacity: 0.8;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.6));
   :hover {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: pointer;
   }
 `;
@@ -111,31 +112,33 @@ const Main: React.FC = () => {
   };
 
   return (
-    <Wrapper>
-      <Bgimg image={tweet !== null ? tweet.BackGroundImage : null} />
-      <Iconimg image={tweet !== null ? tweet.UserIcon : null} />
-      <Button>follow</Button>
-      <AdditionalButton icon={PlusIcon} onClick={onClickAddtionalButton} />
-      <UserData
-        UserName={tweet?.UserName}
-        MainProfile={tweet?.Profile.MainProfile}
-        SubProfile={tweet?.Profile.SubProfile}
-      />
-      <MenuBox>
-        <Menu>Activity</Menu>
-        <Menu>Like</Menu>
-        <Menu>Reply</Menu>
-      </MenuBox>
-      {tweet?.Contents.map((content) => (
-        <Card
-          MainContent={content.MainContent}
-          UserName={tweet.UserName}
-          UserIcon={tweet.UserIcon}
-          key={content.Id}
+    <>
+      <Wrapper>
+        <Bgimg image={tweet?.BackGroundImage} />
+        <Iconimg image={tweet?.UserIcon} />
+        <Button>follow</Button>
+        <UserData
+          UserName={tweet?.UserName}
+          MainProfile={tweet?.Profile.MainProfile}
+          SubProfile={tweet?.Profile.SubProfile}
         />
-      ))}
-      <TweetModal isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
-    </Wrapper>
+        <MenuBox>
+          <Menu>Activity</Menu>
+          <Menu>Like</Menu>
+          <Menu>Reply</Menu>
+        </MenuBox>
+        {tweet?.Contents.map((content) => (
+          <Card
+            MainContent={content.MainContent}
+            UserName={tweet.UserName}
+            UserIcon={tweet.UserIcon}
+            key={content.Id}
+          />
+        ))}
+        <TweetModal isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
+      </Wrapper>
+      <AdditionalButton icon={PlusIcon} onClick={onClickAddtionalButton} />
+    </>
   );
 };
 

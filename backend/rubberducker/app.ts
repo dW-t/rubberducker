@@ -3,17 +3,12 @@ const app = express();
 
 const resJson = require('./json/sample.json');
 
-const fs = require('fs');
-resJson.BackGroundImage = fs.readFileSync('./img/sample-bg.jpg', {
-  encoding: 'base64',
-});
-
-resJson.UserIcon = fs.readFileSync('./img/sample-icon.png', {
-  encoding: 'base64',
-});
+// 画像はURLを渡して、表示させる
+app.use(express.static('public'));
 
 app.get('/contents', (req: express.Request, res: express.Response) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
+  // Jsonデータは小文字はじまりが多いです
   res.json(resJson);
 });
 

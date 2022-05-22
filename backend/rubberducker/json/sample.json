@@ -4,8 +4,8 @@
     "MainProfile": "sampleのプロフィールです",
     "SubProfile": "サブプロフィール"
   },
-  "BackGroundImage": null,
-  "UserIcon": null,
+  "BackGroundImage": "http://localhost:5000/img/sample-bg.jpg",
+  "UserIcon": "http://localhost:5000/img/sample-icon.png",
   "Contents": [
     {
       "Id": 7,

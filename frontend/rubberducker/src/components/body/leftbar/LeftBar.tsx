@@ -15,28 +15,18 @@ const MenuBox = styled.div`
   align-items: flex-end;
 `;
 
-const Menu = styled.div`
-  height: 40px;
-  margin-top: 10px;
-  text-align: center;
-  transition: all 0.3s;
-  :hover {
-    cursor: pointer;
-    opacity: 0.5;
-  }
-`;
-
-const Img = styled.span<{ icon: string }>`
+// imageは基本的にimgタグを使いましょう
+const IconImage = styled.img`
   height: 24px;
   width: 24px;
   margin-right: 6px;
-  background-image: url(${(props) => props.icon});
 `;
 
 const MenuWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 100px;
+  height: 40px;
   transition: all 0.3s;
   :hover {
     cursor: pointer;
@@ -49,10 +39,8 @@ const MenuWithIcon: React.FC<{ title: string; Icon: string }> = ({
   Icon,
 }) => (
   <MenuWrapper>
-    <Img icon={Icon} />
-    <span>
-      <Menu>{title}</Menu>
-    </span>
+    <IconImage src={Icon} />
+    <span>{title}</span>
   </MenuWrapper>
 );
 

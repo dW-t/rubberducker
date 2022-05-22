@@ -9,7 +9,7 @@ import { getTweets } from '../../slices/tweet';
 
 const Wrapper = styled.div`
   background-color: #435058;
-  border-radius: 2%;
+  border-radius: 4px;
   flex-grow: 1;
   flex-basis: 350px;
   margin-right: 20px;
@@ -20,14 +20,14 @@ const Wrapper = styled.div`
 `;
 
 const Bgimg = styled.div<{ image: string | null }>((props) => ({
-  backgroundImage: `url(data:jpg;base64,${props.image ?? ''})`,
+  backgroundImage: `url(${props.image ?? ''})`,
   width: '100%',
   height: '275px',
   borderRadius: '2%',
 }));
 
 const Iconimg = styled.div<{ image: string | null }>((props) => ({
-  backgroundImage: `url(data:png;base64,${props.image ?? ''})`,
+  backgroundImage: `url(${props.image ?? ''})`,
   position: 'absolute',
   left: '25px',
   top: '200px',
@@ -114,26 +114,28 @@ const Main: React.FC = () => {
     <Wrapper>
       <Bgimg image={tweet !== null ? tweet.BackGroundImage : null} />
       <Iconimg image={tweet !== null ? tweet.UserIcon : null} />
-      <Button>follow</Button>
-      <AdditionalButton icon={PlusIcon} onClick={onClickAddtionalButton} />
-      <UserData
-        UserName={tweet?.UserName}
-        MainProfile={tweet?.Profile.MainProfile}
-        SubProfile={tweet?.Profile.SubProfile}
-      />
-      <MenuBox>
-        <Menu>Activity</Menu>
-        <Menu>Like</Menu>
-        <Menu>Reply</Menu>
-      </MenuBox>
-      {tweet?.Contents.map((content) => (
-        <Card
-          MainContent={content.MainContent}
-          UserName={tweet.UserName}
-          UserIcon={tweet.UserIcon}
-          key={content.Id}
+      <div style={{ padding: 16 }}>
+        <Button>follow</Button>
+        <AdditionalButton icon={PlusIcon} onClick={onClickAddtionalButton} />
+        <UserData
+          UserName={tweet?.UserName}
+          MainProfile={tweet?.Profile.MainProfile}
+          SubProfile={tweet?.Profile.SubProfile}
         />
-      ))}
+        <MenuBox>
+          <Menu>Activity</Menu>
+          <Menu>Like</Menu>
+          <Menu>Reply</Menu>
+        </MenuBox>
+        {tweet?.Contents.map((content) => (
+          <Card
+            MainContent={content.MainContent}
+            UserName={tweet.UserName}
+            UserIcon={tweet.UserIcon}
+            key={content.Id}
+          />
+        ))}
+      </div>
       <TweetModal isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
     </Wrapper>
   );

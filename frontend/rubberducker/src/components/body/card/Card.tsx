@@ -16,19 +16,17 @@ type Props = {
 const Wrapper = styled.div`
   display: flex;
   margin: 10px 0 0 0;
+  gap: 4px;
   padding-bottom: 20px;
   border-bottom: 1px solid;
 `;
 
-const Iconimg = styled.div<{ image: string | null }>((props) => ({
-  backgroundImage: `url(data:png;base64,${props.image ?? ''})`,
-  width: '56px',
-  height: '56px',
-  backgroundColor: 'white',
-  borderRadius: '50%',
-  marginRight: '10px',
-  marginLeft: '4px',
-}));
+const IconImage = styled.img`
+  width: 56px;
+  height: 56px;
+  background-color: white;
+  border-radius: 50%;
+`;
 
 const Content = styled.div`
   display: flex;
@@ -77,7 +75,7 @@ const Item = styled.div<{ icon: string }>`
 
 const Card: React.FC<Props> = ({ MainContent, UserName, UserIcon }) => (
   <Wrapper>
-    <Iconimg image={UserIcon} />
+    <IconImage src={UserIcon} />
     <Content>
       <HeadContent>
         <Name>{UserName}</Name>
